@@ -1,6 +1,7 @@
-import { fonts } from "@/app/constants/fonts";
+'use client'
 import {
-  Box,
+  CircularProgress,
+  CircularProgressLabel,
   Heading,
   Tab,
   TabList,
@@ -13,8 +14,8 @@ import React from "react";
 const Components = () => {
   return (
     <>
-      <Heading size='16' >Tabs</Heading>
-      <Tabs isManual isFitted variant="soft-rounded" colorScheme="green" >
+      <Heading size="16">Tabs</Heading>
+      <Tabs isManual isFitted variant="soft-rounded" colorScheme="green">
         <TabList>
           <Tab>One</Tab>
           <Tab>Two</Tab>
@@ -23,19 +24,21 @@ const Components = () => {
 
         <TabPanels>
           <TabPanel>
-            <p>one!</p>
+           one!
           </TabPanel>
           <TabPanel>
-            <p>two!</p>
+           two!
           </TabPanel>
           <TabPanel>
-            <p>four!</p>
+            four!
           </TabPanel>
         </TabPanels>
       </Tabs>
 
-
-    
+      <Heading size="16">Circular Progress</Heading>
+      <CircularProgress value={40} >
+        <CircularProgressLabel>40%</CircularProgressLabel>
+      </CircularProgress>
     </>
   );
 };
