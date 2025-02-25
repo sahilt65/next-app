@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 import {
   CircularProgress,
   CircularProgressLabel,
@@ -9,7 +9,6 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import React from "react";
 
 const Components = () => {
   return (
@@ -35,10 +34,12 @@ const Components = () => {
         </TabPanels>
       </Tabs>
 
-      <Heading size="16">Circular Progress</Heading>
+      {/* <Heading size="16">Circular Progress</Heading> */}
       <CircularProgress value={40} >
         <CircularProgressLabel>40%</CircularProgressLabel>
       </CircularProgress>
+      
+
     </>
   );
 };
