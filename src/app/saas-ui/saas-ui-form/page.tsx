@@ -1,6 +1,6 @@
 "use client";
-import { Box, Button } from "@chakra-ui/react";
-import { Form, zodResolver } from "@saas-ui/forms/zod";
+import { Box, Heading } from "@chakra-ui/react";
+import { Form, } from "@saas-ui/forms/zod";
 import { FormLayout, SubmitButton } from "@saas-ui/react";
 import * as z from "zod";
 
@@ -11,7 +11,7 @@ const schema = z.object({
 });
 
 export default function SaaSUIForm() {
-  const onSubmit = (params: any) => {
+  const saveHandler = (params: any) => {
     console.log(params);
     return new Promise((resolve) => {
       setTimeout(resolve, 1000);
@@ -20,42 +20,38 @@ export default function SaaSUIForm() {
 
   return (
     <Box padding="12px">
-      <Form
-        schema={schema}
-        resolver={zodResolver(schema)}
-        defaultValues={{
-          name: "Saas UI",
-          description: "",
-        }}
-        onSubmit={onSubmit}
-      >
-        {({ Field , formState}) => (
+      <Form onSubmit={saveHandler}>
+        {({ Field }) => (
           <FormLayout>
-            <Field
-              name="name"
-              label="Name"
-              type="text"
-              help="Choose a name for this project"
-              //   rules={{ required: true }}
-            />
+            <Heading size="md">Personal information</Heading>
+            <FormLayout columns={2}>
+              <Field name="firstname" label="Name" />
+              <Field name="lastname" label="Last name" />
+            </FormLayout>
 
-            <Field
-              name="description"
-              type="textarea"
-              label="Description"
-              placeholder="Optional description"
-            />
+            <Field name="email" label="Email address" />
 
-            <Field name="email" type="text" label="Email" placeholder="Email" />
-            <Button
-              type="submit"
-              colorScheme="teal"
-              isLoading={formState.isSubmitting}
-            >
-              Submittttt
-            </Button>
+            <Heading size="md" mt="4">
+              Address
+            </Heading>
+            <FormLayout>
+              <Field name="address" label="Address" />
+              <Field name="city" label="City" />
+            </FormLayout>
 
-            {/* <SubmitButton disableIfInvalid>Create Project</SubmitButton> */}
+            <Heading size="md" mt="4">
+              Billing information
+            </Heading>
+            <FormLayout columns={1}>
+              <Field name="card" label="Card number" />
+              <FormLayout columns={3}>
+                <Field name="exp" label="Expiration date" />
+                <Field name="cvc" label="CVC" />
+                <Field name="pin" label="PIN" />
+              </FormLayout>
+            </FormLayout>
+
+            <SubmitButton>Complete order</SubmitButton>
           </FormLayout>
         )}
       </Form>
