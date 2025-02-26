@@ -4,7 +4,7 @@ import Link from "next/link";
 import ProductCard from "./components/ProductCard";
 import { useMemo, useState } from "react";
 
-const nums = new Array(30_000_000).fill(0).map((_,i) => {
+const nums = new Array(1).fill(0).map((_,i) => {
   return {
     index : i,
     isMagical : i === 29_000_000
