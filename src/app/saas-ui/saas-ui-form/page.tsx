@@ -19,24 +19,26 @@ export default function SaaSUIForm() {
         }}
         onSubmit={onSubmit}
       >
-        <FormLayout>
-          <Field
-            name="name"
-            label="Name"
-            type="text"
-            help="Choose a name for this project"
-            rules={{ required: true }}
-          />
+        {({ Field }) => (
+          <FormLayout>
+            <Field
+              name="name"
+              label="Name"
+              type="text"
+              help="Choose a name for this project"
+              rules={{ required: true }}
+            />
 
-          <Field
-            name="description"
-            type="textarea"
-            label="Description"
-            placeholder="Optional description"
-          />
+            <Field
+              name="description"
+              type="textarea"
+              label="Description"
+              placeholder="Optional description"
+            />
 
-          <SubmitButton>Create Project</SubmitButton>
-        </FormLayout>
+            <SubmitButton>Create Project</SubmitButton>
+          </FormLayout>
+        )}
       </Form>
     </Box>
   );
