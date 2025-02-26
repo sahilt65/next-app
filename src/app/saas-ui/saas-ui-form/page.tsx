@@ -9,22 +9,28 @@ type FormValues = {
 };
 const SaaSUIForm = () => {
     const form = useForm<FormValues>();
-    const {register, control, handleSubmit} = form;
+    const {register, control, handleSubmit, formState} = form;
     rerender++;
+    const {errors} = formState;
     const onSubmit  = (data: FormValues) => {
         console.log({data});
     }
   return (
     <div>
-        <form action="" onSubmit={handleSubmit(onSubmit)}>
+        <form action="" onSubmit={handleSubmit(onSubmit)} noValidate>
             <label htmlFor="username">Username</label>
-            <input type="text" id="username" {...register("username")}></input>
+            <input type="text" id="username" {...register("username", {required:"Username is required"})}></input>
+            <p>{errors.username?.message}</p>
 
             <label htmlFor="email">Email</label>
-            <input type="text" id="email" {...register("email")}></input>
+            <input type="text" id="email" {...register("email",  {required:"Email is required"})}></input>
+            <p>{errors.email?.message}</p>
 
-            <label htmlFor="username">Password</label>
-            <input type="text" id="password" {...register("password")}></input>
+
+            <label htmlFor="password">Password</label>
+            <input type="text" id="password" {...register("password",  {required:"Password is required"})}></input>
+            <p>{errors.password?.message}</p>
+
             <button>Submit</button>
         </form>
     </div>
