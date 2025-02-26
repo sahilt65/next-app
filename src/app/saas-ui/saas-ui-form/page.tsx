@@ -1,40 +1,43 @@
-'use client'
-import React from "react";
-import { useForm } from "react-hook-form";
-let rerender = 0;
-type FormValues = {
-    username: string,
-    email: string,
-    password: string
-};
-const SaaSUIForm = () => {
-    const form = useForm<FormValues>();
-    const {register, control, handleSubmit, formState} = form;
-    rerender++;
-    const {errors} = formState;
-    const onSubmit  = (data: FormValues) => {
-        console.log({data});
-    }
+"use client";
+import { Box } from "@chakra-ui/react";
+import { Form, Field, FormLayout, SubmitButton } from "@saas-ui/react";
+
+export default function SaaSUIForm() {
+  const onSubmit = (params: any) => {
+    console.log(params);
+    return new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
+  };
+
   return (
-    <div>
-        <form action="" onSubmit={handleSubmit(onSubmit)} noValidate>
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username" {...register("username", {required:"Username is required"})}></input>
-            <p>{errors.username?.message}</p>
+    <Box width="50%" padding="12px">
+      <Form
+        defaultValues={{
+          name: "Saas UI",
+          description: "",
+        }}
+        onSubmit={onSubmit}
+      >
+        <FormLayout>
+          <Field
+            name="name"
+            label="Name"
+            type="text"
+            help="Choose a name for this project"
+            rules={{ required: true }}
+          />
 
-            <label htmlFor="email">Email</label>
-            <input type="text" id="email" {...register("email",  {required:"Email is required"})}></input>
-            <p>{errors.email?.message}</p>
+          <Field
+            name="description"
+            type="textarea"
+            label="Description"
+            placeholder="Optional description"
+          />
 
-
-            <label htmlFor="password">Password</label>
-            <input type="text" id="password" {...register("password",  {required:"Password is required"})}></input>
-            <p>{errors.password?.message}</p>
-
-            <button>Submit</button>
-        </form>
-    </div>
-  )
-};
-
-export default SaaSUIForm;
+          <SubmitButton>Create Project</SubmitButton>
+        </FormLayout>
+      </Form>
+    </Box>
+  );
+}
