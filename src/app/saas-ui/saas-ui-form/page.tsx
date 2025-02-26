@@ -1,14 +1,6 @@
 "use client";
 import { Box, Heading } from "@chakra-ui/react";
-import { Form, } from "@saas-ui/forms/zod";
-import { FormLayout, SubmitButton } from "@saas-ui/react";
-import * as z from "zod";
-
-const schema = z.object({
-  name: z.string().nonempty("Name is required"),
-  description: z.string().optional(),
-  email: z.string().email().nonempty("Email is required"),
-});
+import { Form, FormLayout, SubmitButton } from "@saas-ui/react";
 
 export default function SaaSUIForm() {
   const saveHandler = (params: any) => {
@@ -21,7 +13,7 @@ export default function SaaSUIForm() {
   return (
     <Box padding="12px">
       <Form onSubmit={saveHandler}>
-        {({ Field }) => (
+        {({ Field, DisplayIf }) => (
           <FormLayout>
             <Heading size="md">Personal information</Heading>
             <FormLayout columns={2}>
@@ -31,25 +23,38 @@ export default function SaaSUIForm() {
 
             <Field name="email" label="Email address" />
 
-            <Heading size="md" mt="4">
-              Address
-            </Heading>
-            <FormLayout>
-              <Field name="address" label="Address" />
-              <Field name="city" label="City" />
-            </FormLayout>
+            <Field
+              name="ship"
+              type="checkbox"
+              label="Ship to my home address"
+            />
 
-            <Heading size="md" mt="4">
-              Billing information
-            </Heading>
-            <FormLayout columns={1}>
-              <Field name="card" label="Card number" />
-              <FormLayout columns={3}>
-                <Field name="exp" label="Expiration date" />
-                <Field name="cvc" label="CVC" />
-                <Field name="pin" label="PIN" />
+            <DisplayIf
+              name="ship"
+              condition={(ship) => !!ship}
+              onToggle={(matches) => console.log(matches)}
+            >
+              <FormLayout>
+                <Heading size="md" mt="4">
+                  Address
+                </Heading>
+                <FormLayout>
+                  <Field name="address" label="Address" />
+                  <Field name="city" label="City" />
+                </FormLayout>
+
+                <Heading size="md" mt="4">
+                  Billing information
+                </Heading>
+                <FormLayout columns={2}>
+                  <Field name="card" label="Card number" />
+                  <FormLayout columns={2}>
+                    <Field name="exp" label="Expiration date" />
+                    <Field name="cvc" label="CVC" />
+                  </FormLayout>
+                </FormLayout>
               </FormLayout>
-            </FormLayout>
+            </DisplayIf>
 
             <SubmitButton>Complete order</SubmitButton>
           </FormLayout>
