@@ -1,5 +1,5 @@
 "use client";
-import { Box } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import { Form, zodResolver } from "@saas-ui/forms/zod";
 import { FormLayout, SubmitButton } from "@saas-ui/react";
 import * as z from "zod";
@@ -29,7 +29,7 @@ export default function SaaSUIForm() {
         }}
         onSubmit={onSubmit}
       >
-        {({ Field }) => (
+        {({ Field , formState}) => (
           <FormLayout>
             <Field
               name="name"
@@ -47,8 +47,15 @@ export default function SaaSUIForm() {
             />
 
             <Field name="email" type="text" label="Email" placeholder="Email" />
+            <Button
+              type="submit"
+              colorScheme="teal"
+              isLoading={formState.isSubmitting}
+            >
+              Submittttt
+            </Button>
 
-            <SubmitButton>Create Project</SubmitButton>
+            {/* <SubmitButton disableIfInvalid>Create Project</SubmitButton> */}
           </FormLayout>
         )}
       </Form>
