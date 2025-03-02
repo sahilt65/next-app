@@ -1,6 +1,11 @@
 "use client";
 import { Box } from "@chakra-ui/react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 type Todo = {
   userId: number;
@@ -8,7 +13,7 @@ type Todo = {
   title: string;
   completed: boolean;
 };
-type NewPost = {
+type Post = {
   userId: number;
   id: number;
   title: string;
@@ -16,11 +21,12 @@ type NewPost = {
 };
 
 const ReactQuery = () => {
+  const queryClient = useQueryClient();
   const { data, isLoading, error } = useQuery<Todo[]>({
-    queryKey: ["key-1"],
+    queryKey: ["posts"],
     queryFn: async () => {
       const response = await fetch(
-        "https://jsonplaceholder.typicode.com/todos"
+        "https://jsonplaceholder.typicode.com/posts"
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -30,7 +36,7 @@ const ReactQuery = () => {
   });
 
   const { mutate, isPending, isError, isSuccess } = useMutation({
-    mutationFn: async (newPost: NewPost) =>
+    mutationFn: async (newPost: Post) =>
       await fetch("https://jsonplaceholder.typicode.com/posts", {
         method: "POST",
         headers: {
@@ -38,6 +44,13 @@ const ReactQuery = () => {
         },
         body: JSON.stringify(newPost),
       }).then((res) => res.json()),
+    onSuccess: (newPost: Post) => {
+      queryClient.setQueryData(["posts"], (oldPosts: Post) => [
+        ...oldPosts,
+        newPost,
+      ]);
+      
+    },
   });
 
   if (isLoading) return <p>Loading...</p>;
