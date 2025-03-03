@@ -2,7 +2,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli'
  
 const config: CodegenConfig = {
   schema: 'https://graphqlplaceholder.vercel.app/graphql',
-  documents: ['src/**/*.tsx'],
+  documents: ['./*.gql'],
   ignoreNoDocuments: true,
   generates: {
     './src/app/graphql/': {

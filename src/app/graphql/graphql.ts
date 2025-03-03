@@ -218,7 +218,7 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', userById?: { __typename?: 'User', id: number, name?: string | null, username?: string | null, email?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'Address', street?: string | null, suite?: string | null, city?: string | null, zipcode?: string | null, geo?: { __typename?: 'Geo', lat?: string | null, lng?: string | null } | null } | null, company?: { __typename?: 'Company', name?: string | null, catchPhrase?: string | null, bs?: string | null } | null } | null };
+export type UserQuery = { __typename?: 'Query', userById?: { __typename?: 'User', id: number, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'Address', street?: string | null, suite?: string | null, city?: string | null, zipcode?: string | null, geo?: { __typename?: 'Geo', lat?: string | null, lng?: string | null } | null } | null, company?: { __typename?: 'Company', name?: string | null, catchPhrase?: string | null, bs?: string | null } | null } | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -240,8 +240,6 @@ export const UserDocument = new TypedDocumentString(`
   userById(id: $id) {
     id
     name
-    username
-    email
     phone
     website
     address {

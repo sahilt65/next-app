@@ -15,16 +15,16 @@ import * as types from './graphql';
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query User($id: Int!) {\n    userById(id: $id) {\n      id\n      name\n      username\n      email\n      phone\n      website\n      address {\n        street\n        suite\n        city\n        zipcode\n        geo {\n          lat\n          lng\n        }\n      }\n      company {\n        name\n        catchPhrase\n        bs\n      }\n    }\n  }\n": typeof types.UserDocument,
+    "query User($id: Int!) {\n  userById(id: $id) {\n    id\n    name\n    phone\n    website\n    address {\n      street\n      suite\n      city\n      zipcode\n      geo {\n        lat\n        lng\n      }\n    }\n    company {\n      name\n      catchPhrase\n      bs\n    }\n  }\n}": typeof types.UserDocument,
 };
 const documents: Documents = {
-    "\n  query User($id: Int!) {\n    userById(id: $id) {\n      id\n      name\n      username\n      email\n      phone\n      website\n      address {\n        street\n        suite\n        city\n        zipcode\n        geo {\n          lat\n          lng\n        }\n      }\n      company {\n        name\n        catchPhrase\n        bs\n      }\n    }\n  }\n": types.UserDocument,
+    "query User($id: Int!) {\n  userById(id: $id) {\n    id\n    name\n    phone\n    website\n    address {\n      street\n      suite\n      city\n      zipcode\n      geo {\n        lat\n        lng\n      }\n    }\n    company {\n      name\n      catchPhrase\n      bs\n    }\n  }\n}": types.UserDocument,
 };
 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query User($id: Int!) {\n    userById(id: $id) {\n      id\n      name\n      username\n      email\n      phone\n      website\n      address {\n        street\n        suite\n        city\n        zipcode\n        geo {\n          lat\n          lng\n        }\n      }\n      company {\n        name\n        catchPhrase\n        bs\n      }\n    }\n  }\n"): typeof import('./graphql').UserDocument;
+export function graphql(source: "query User($id: Int!) {\n  userById(id: $id) {\n    id\n    name\n    phone\n    website\n    address {\n      street\n      suite\n      city\n      zipcode\n      geo {\n        lat\n        lng\n      }\n    }\n    company {\n      name\n      catchPhrase\n      bs\n    }\n  }\n}"): typeof import('./graphql').UserDocument;
 
 
 export function graphql(source: string) {
