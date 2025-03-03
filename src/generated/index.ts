@@ -1,5 +1,4 @@
-/* eslint-disable */
-import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -7,6 +6,26 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+
+function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
+  return async (): Promise<TData> => {
+    const res = await fetch("https://graphqlplaceholder.vercel.app/graphql", {
+    method: "POST",
+    ...({"headers":{"Content-Type":"application/json"}}),
+      body: JSON.stringify({ query, variables }),
+    });
+
+    const json = await res.json();
+
+    if (json.errors) {
+      const { message } = json.errors[0];
+
+      throw new Error(message);
+    }
+
+    return json.data;
+  }
+}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -220,22 +239,16 @@ export type UserQueryVariables = Exact<{
 
 export type UserQuery = { __typename?: 'Query', userById?: { __typename?: 'User', id: number, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'Address', street?: string | null, suite?: string | null, city?: string | null, zipcode?: string | null, geo?: { __typename?: 'Geo', lat?: string | null, lng?: string | null } | null } | null, company?: { __typename?: 'Company', name?: string | null, catchPhrase?: string | null, bs?: string | null } | null } | null };
 
-export class TypedDocumentString<TResult, TVariables>
-  extends String
-  implements DocumentTypeDecoration<TResult, TVariables>
-{
-  __apiType?: DocumentTypeDecoration<TResult, TVariables>['__apiType'];
+export type GetUserLimitedDetailsQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
 
-  constructor(private value: string, public __meta__?: Record<string, any> | undefined) {
-    super(value);
-  }
 
-  toString(): string & DocumentTypeDecoration<TResult, TVariables> {
-    return this.value;
-  }
-}
+export type GetUserLimitedDetailsQuery = { __typename?: 'Query', userById?: { __typename?: 'User', id: number, name?: string | null, phone?: string | null, website?: string | null } | null };
 
-export const UserDocument = new TypedDocumentString(`
+
+
+export const UserDocument = `
     query User($id: Int!) {
   userById(id: $id) {
     id
@@ -259,4 +272,43 @@ export const UserDocument = new TypedDocumentString(`
     }
   }
 }
-    `) as unknown as TypedDocumentString<UserQuery, UserQueryVariables>;
+    `;
+
+export const useUserQuery = <
+      TData = UserQuery,
+      TError = unknown
+    >(
+      variables: UserQueryVariables,
+      options?: UseQueryOptions<UserQuery, TError, TData>
+    ) => {
+    
+    return useQuery<UserQuery, TError, TData>(
+      ['User', variables],
+      fetcher<UserQuery, UserQueryVariables>(UserDocument, variables),
+      options
+    )};
+
+export const GetUserLimitedDetailsDocument = `
+    query GetUserLimitedDetails($id: Int!) {
+  userById(id: $id) {
+    id
+    name
+    phone
+    website
+  }
+}
+    `;
+
+export const useGetUserLimitedDetailsQuery = <
+      TData = GetUserLimitedDetailsQuery,
+      TError = unknown
+    >(
+      variables: GetUserLimitedDetailsQueryVariables,
+      options?: UseQueryOptions<GetUserLimitedDetailsQuery, TError, TData>
+    ) => {
+    
+    return useQuery<GetUserLimitedDetailsQuery, TError, TData>(
+      ['GetUserLimitedDetails', variables],
+      fetcher<GetUserLimitedDetailsQuery, GetUserLimitedDetailsQueryVariables>(GetUserLimitedDetailsDocument, variables),
+      options
+    )};

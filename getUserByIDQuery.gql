@@ -1,4 +1,5 @@
 # Fetch user details by ID
+
 query User($id: Int!) {
   userById(id: $id) {
     id

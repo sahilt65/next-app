@@ -1,0 +1,10 @@
+# Fetch user details by ID
+
+query GetUserLimitedDetails($id: Int!) {
+  userById(id: $id) {
+    id
+    name
+    phone
+    website
+  }
+}
