@@ -1,0 +1,15 @@
+overwrite: true
+schema: 'https://graphqlplaceholder.vercel.app/graphql'
+documents: './*.gql'
+generates:
+    src/generated/index.ts:
+        plugins:
+            - typescript
+            - typescript-operations
+            - typescript-react-query
+        config:
+            fetcher:
+                endpoint: 'https://graphqlplaceholder.vercel.app/graphql'
+                fetchParams:
+                    headers:
+                        Content-Type: 'application/json'

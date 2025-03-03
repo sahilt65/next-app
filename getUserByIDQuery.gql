@@ -1,0 +1,25 @@
+# Fetch user details by ID
+
+query User($id: Int!) {
+  userById(id: $id) {
+    id
+    name
+    phone
+    website
+    address {
+      street
+      suite
+      city
+      zipcode
+      geo {
+        lat
+        lng
+      }
+    }
+    company {
+      name
+      catchPhrase
+      bs
+    }
+  }
+}
