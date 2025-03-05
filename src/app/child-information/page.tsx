@@ -1,38 +1,76 @@
 "use client";
 
 import { Box, Divider, Heading } from "@chakra-ui/react";
-import { Form, FormLayout, SubmitButton, useForm } from "@saas-ui/react";
+import { Form, FormLayout, SubmitButton } from "@saas-ui/forms";
+import { yupResolver } from "@saas-ui/forms/yup";
+
+
+import * as yup from "yup";
 
 export default function ChildCareForm() {
   const saveHandler = (data: any) => {
     console.log(data);
   };
 
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  const validationSchema = yup.object({
+    childName: yup.string().required("Child name is required"),
+    childEmailAddress: yup
+      .string()
+      .email("Invalid email format")
+      .required("Child email is required"),
+    childDateOfBirth: yup.date().required("Date of birth is required"),
+    childSchoolSiteAssociated: yup.string().required("School/site is required"),
+    childGrade: yup.string().required("Child grade is required"),
+    childPreferredName: yup.string().required("Preferred name is required"),
+    preferredLanguageForTherapy: yup.string().required("Language is required"),
+    parentGaurdianRelationshipToChild: yup
+      .string()
+      .required("Relationship is required"),
+    parentGaurdianFirstName: yup.string().required("First name is required"),
+    parentGaurdianLastName: yup.string().required("Last name is required"),
+    parentGaurdianEmailAddress: yup
+      .string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    parentGaurdianPhoneNumber: yup
+      .string()
+      .matches(phoneRegExp, "Phone number is not valid"),
+    parentGaurdianLanguage: yup.string().required("Language is required"),
+    canContactParent: yup.string().required("Selection is required"),
+    whyDayBreak: yup.string().required("Please provide a reason"),
+  });
+
   return (
-    <Box 
-      display="flex" 
-      justifyContent="center" 
-      alignItems="center" 
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
       minHeight="100vh"
-      backgroundColor="gray.100" 
+      backgroundColor="gray.100"
     >
-      <Box 
-        padding="20px" 
-        width="50%" 
-        border="1.8px solid gray.300" 
+      <Box
+        padding="20px"
+        width="50%"
+        border="1.8px solid gray.300"
         borderRadius="8px"
-        backgroundColor="white" 
-        boxShadow="lg" 
+        backgroundColor="white"
+        boxShadow="lg"
         margin="10px"
       >
-        <Form onSubmit={saveHandler}>
-          {({ Field, DisplayIf }) => (
+        <Form onSubmit={saveHandler} schema={validationSchema} resolver={yupResolver(validationSchema)}>
+          {({ Field }) => (
             <FormLayout>
               <FormLayout>
                 <Heading size="md">Information</Heading>
                 <FormLayout columns={2}>
-                  <Field name="childName" label="Child Name" isRequired={true} />
-                  <Field name="childEmailAddress" label="Child email address" isRequired={true} />
+                  <Field name="childName" label="Child Name" isRequired />
+                  <Field
+                    name="childEmailAddress"
+                    label="Child email address"
+                    isRequired
+                  />
                 </FormLayout>
 
                 <FormLayout columns={2}>
@@ -40,17 +78,17 @@ export default function ChildCareForm() {
                     name="childDateOfBirth"
                     label="Child date of birth"
                     type="date"
-                    isRequired={true}
+                    isRequired
                   />
                   <Field
                     name="childSchoolSiteAssociated"
                     label="Child school/site associated"
-                    isRequired={true}
+                    isRequired
                   />
                 </FormLayout>
 
                 <FormLayout columns={2}>
-                  <Field name="childGrade" label="Child grade" isRequired={true} />
+                  <Field name="childGrade" label="Child grade" isRequired />
                 </FormLayout>
               </FormLayout>
               <Divider my={4} height="1.8px" bg="gray.300" />
@@ -58,11 +96,15 @@ export default function ChildCareForm() {
               <FormLayout>
                 <Heading size="md">Child information</Heading>
                 <FormLayout columns={3}>
-                  <Field name="childPreferredName" label="Child preferred name" isRequired={true} />
+                  <Field
+                    name="childPreferredName"
+                    label="Child preferred name"
+                    isRequired
+                  />
                   <Field
                     name="preferredLanguageForTherapy"
                     label="Preferred language for therapy"
-                    isRequired={true}
+                    isRequired
                   />
                 </FormLayout>
               </FormLayout>
@@ -73,9 +115,9 @@ export default function ChildCareForm() {
                 <FormLayout columns={3}>
                   <Field
                     name="parentGaurdianRelationshipToChild"
-                    label="Parent/Gaurdian relationship to child"
+                    label="Parent/Guardian relationship to child"
                     type="select"
-                    isRequired={true}
+                    isRequired
                     options={[
                       { value: "Mother", label: "Mother" },
                       { value: "Father", label: "Father" },
@@ -87,31 +129,31 @@ export default function ChildCareForm() {
                 <FormLayout columns={3}>
                   <Field
                     name="parentGaurdianFirstName"
-                    label="Parent/Gaurdian first name"
-                    isRequired={true}
+                    label="Parent/Guardian first name"
+                    isRequired
                   />
                   <Field
                     name="parentGaurdianLastName"
-                    label="Parent/Gaurdian last name"
-                    isRequired={true}
+                    label="Parent/Guardian last name"
+                    isRequired
                   />
                   <Field
                     name="parentGaurdianEmailAddress"
-                    label="Parent/Gaurdian email address"
-                    isRequired={true}
+                    label="Parent/Guardian email address"
+                    isRequired
                   />
                 </FormLayout>
 
                 <FormLayout columns={3}>
                   <Field
                     name="parentGaurdianPhoneNumber"
-                    label="Parent/Gaurdian phone number"
-                    isRequired={true}
+                    label="Parent/Guardian phone number"
+                    isRequired
                   />
                   <Field
                     name="parentGaurdianLanguage"
-                    label="Parent/Gaurdian language"
-                    isRequired={true}
+                    label="Parent/Guardian language"
+                    isRequired
                   />
                 </FormLayout>
               </FormLayout>
@@ -124,7 +166,7 @@ export default function ChildCareForm() {
                   label="Can the parent/guardian listed above be contacted by Daybreak Health?"
                   type="radio"
                   columns={2}
-                  isRequired={true}
+                  isRequired
                   options={[
                     { value: "yes", label: "Yes" },
                     { value: "no", label: "No" },
@@ -132,9 +174,9 @@ export default function ChildCareForm() {
                 />
                 <Field
                   name="whyDayBreak"
-                  label="Why are you requesting Daybreak Health service for John Doe"
+                  label="Why are you requesting Daybreak Health service?"
                   type="textarea"
-                  isRequired={true}
+                  isRequired
                 />
               </FormLayout>
 
@@ -147,7 +189,9 @@ export default function ChildCareForm() {
                 <Box color="red.500" fontSize="sm">
                   * Required Fields
                 </Box>
-                <SubmitButton width={"25%"} disableIfInvalid>Submit</SubmitButton>
+                <SubmitButton width="25%" disableIfInvalid>
+                  Submit
+                </SubmitButton>
               </Box>
             </FormLayout>
           )}
