@@ -1,15 +1,24 @@
 "use client";
 
+import { useAddChildCareRequestMutation } from "@/generated";
 import { Box, Divider, Heading } from "@chakra-ui/react";
 import { Form, FormLayout, SubmitButton } from "@saas-ui/forms";
 import { yupResolver } from "@saas-ui/forms/yup";
 
-
 import * as yup from "yup";
 
 export default function ChildCareForm() {
+  const mutation = useAddChildCareRequestMutation({
+    onSuccess: (data) => {
+      console.log("Mutation Success:", data);
+    },
+    onError: (error) => {
+      console.error("Mutation Error:", error);
+    },
+  });
   const saveHandler = (data: any) => {
-    console.log(data);
+    console.log("Form Data:", data);
+    mutation.mutate({"form" : data}); // Pass form data to the mutation function
   };
 
   const phoneRegExp =
@@ -59,7 +68,11 @@ export default function ChildCareForm() {
         boxShadow="lg"
         margin="10px"
       >
-        <Form onSubmit={saveHandler} schema={validationSchema} resolver={yupResolver(validationSchema)}>
+        <Form
+          onSubmit={saveHandler}
+          schema={validationSchema}
+          resolver={yupResolver(validationSchema)}
+        >
           {({ Field }) => (
             <FormLayout>
               <FormLayout>

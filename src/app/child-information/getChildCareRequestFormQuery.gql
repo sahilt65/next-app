@@ -1,0 +1,20 @@
+query GetChildCareRequest($id: ID!) {
+  childCareRequestForm(id: $id) {
+    id
+    childName
+    childEmailAddress
+    childDateOfBirth
+    childSchoolSiteAssociated
+    childGrade
+    childPreferredName
+    preferredLanguageForTherapy
+    parentGaurdianRelationshipToChild
+    parentGaurdianFirstName
+    parentGaurdianLastName
+    parentGaurdianEmailAddress
+    parentGaurdianPhoneNumber
+    parentGaurdianLanguage
+    canContactParent
+    whyDayBreak
+  }
+}
