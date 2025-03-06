@@ -16,13 +16,19 @@
     "@saas-ui/command-bar": "^0.9.1",
     "@saas-ui/forms": "^2.11.0",
     "@saas-ui/react": "^2.11.4",
+    "@tanstack/react-query": "^4",
     "framer-motion": "^12.4.7",
     "next": "^14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "zod": "^3.24.2"
+    "yup": "^1.6.1"
   },
   "devDependencies": {
+    "@0no-co/graphqlsp": "^1.12.16",
+    "@graphql-codegen/cli": "^5.0.5",
+    "@graphql-codegen/schema-ast": "^4.1.0",
+    "@graphql-codegen/typescript-react-query": "^6.1.0",
+    "@parcel/watcher": "^2.5.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

@@ -1,0 +1,20 @@
+mutation AddChildCareRequest($form: AddChildCareRequestInput!) {
+  addChildCareRequest(form: $form) {
+    id
+    childName
+    childEmailAddress
+    childDateOfBirth
+    childSchoolSiteAssociated
+    childGrade
+    childPreferredName
+    preferredLanguageForTherapy
+    parentGaurdianRelationshipToChild
+    parentGaurdianFirstName
+    parentGaurdianLastName
+    parentGaurdianEmailAddress
+    parentGaurdianPhoneNumber
+    parentGaurdianLanguage
+    canContactParent
+    whyDayBreak
+  }
+}
