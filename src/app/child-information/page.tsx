@@ -17,8 +17,7 @@ export default function ChildCareForm() {
     },
   });
   const saveHandler = (data: any) => {
-    console.log("Form Data:", data);
-    mutation.mutate({"form" : data}); // Pass form data to the mutation function
+    mutation.mutateAsync({"form" : data});
   };
 
   const phoneRegExp =

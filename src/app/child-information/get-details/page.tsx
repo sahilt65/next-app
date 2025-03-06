@@ -1,22 +1,18 @@
 'use client'
 import React from "react";
 import { 
-  Box, Text, Spinner, Center, Card, CardHeader, CardBody, CardFooter 
+  Box, Text, Center, Card, CardHeader, CardBody, CardFooter 
 } from "@chakra-ui/react";
 import { useGetChildCareRequestQuery } from "@/generated";
 
 const ChildCareRequestFormDetails = () => {
-  const { data, error } = useGetChildCareRequestQuery({
-      id: "664" , // Hardcoded ID
+  const { data, error , isLoading} = useGetChildCareRequestQuery({
+      id: "679" ,
   });
 
 
-  if (error) {
-    return (
-      <Center minH="100vh">
-        <Text color="red.500">Error: {error}</Text>
-      </Center>
-    );
+  if(isLoading){
+    return (<div>Loading...</div>)
   }
 
   const childData = data?.childCareRequestForm;
